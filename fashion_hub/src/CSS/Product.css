@@ -1,0 +1,39 @@
+*{
+  font-family: 'poppins sans-serif';
+}
+.product-heading {
+    width: auto;
+    font-size: 42px;
+    text-align: center;
+    font-weight: 500;
+    margin-top: 70px;
+    margin:30px;
+    line-height: 38px;
+  }
+  
+  .product-breadcrumbs {
+    font-weight: 500;
+    font-size: 14px;
+    margin: -10px 0px 60px 0px;
+  }
+  
+  .product-filters-container {
+    padding-left: 3.2%;
+    width: 100%;
+    display: flex;
+    gap:30px;
+    margin-bottom:10px;
+    margin-top:10px
+  }
+  
+  .product-logo {
+    float: right;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 500px) {
+    .product-logo {
+      display: none;
+    }
+  }
+  

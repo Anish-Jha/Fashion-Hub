@@ -1,0 +1,106 @@
+* {
+  font-family: Helvetica;
+  /* background-color: #ffffff; */
+}
+.mainNavbar {
+    top: 0;
+    left: 0;
+    position: sticky;
+    width: 100%;
+    background-color: #ffffff;
+    z-index: 5;
+}
+
+.UpperNavbar {
+    height: 36px;
+    background-color: #ffffff;
+}
+
+.imageMens {
+    width: 34vw;
+    height: fit-content;
+    padding: 20px;
+}
+
+  
+  /* Style the open button */
+  .open-button {
+    margin-top: 30px;
+    padding: 10px 30px;
+    background: #2196f3;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+  }
+  
+  .open-button:hover {
+    background: #0b7dda;
+  }
+  
+  /* Style the "Close" button */
+  .close-button {
+    position: absolute;
+    top: 0px;
+    right: 45px;
+    font-size: 60px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #fff;
+  }
+  
+  /* Style search elements */
+  .search-input {
+    width: 400px;
+    padding: 12px 15px;
+    border: none;
+    outline: none;
+    border-radius: 30px 0px 0px 30px;
+  }
+  
+  .search-button {
+    padding: 12px 15px;
+    border: none;
+    cursor: pointer;
+    background: #199da9;
+    border-radius: 0px 30px 30px 0px;
+    /* transition: 0.3s; */
+  }
+  
+  .search-button:hover {
+    background: #ffb03a;
+  }
+  
+  .search-text {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+.LowerNavCont{
+    align-items: center;
+    margin-left: 15%;
+}
+.LowerNavbar {
+    height: 70px;
+}
+
+.hamburgerMenu{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+@media(max-width: 1111px){
+      .UpperNavbar{
+        display: none;
+      } 
+      
+      
+}
+
+@media(max-width: 768px){
+    .mainNavbar{
+        display: none;
+    }
+    
+}
