@@ -84,20 +84,4 @@
 - Got to know how to collabrate with team members.
 - Enjoyed the process of learning and creating the application.
 
-# Contributor
 
-#### Devang Bramhakshatriya
-> Github: [Devangbramhakshatriya](https://github.com/Devangbramhakshatriya)
-(Teamlead)
-Worked on Landing Page and Cart Module
-#### Anish Jha
-> Github: [Anish-Jha](https://github.com/Anish-Jha)
-Worked on Navbar, Admin and User module
-
-#### Kartikey Mishra
->Github: [Kartikey0813](https://github.com/Kartikey0813)
-Worked on Login and Logout Module
-
-#### Arth Bhushan
->Github: [arthbh](https://github.com/arthbh)
-Worked on Payment Module
