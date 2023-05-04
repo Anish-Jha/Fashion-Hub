@@ -4,8 +4,6 @@
 
 <h3 align="center"> It has 5 modules Admin, User,Products, Add to Cart, Checkout.</h3>
 
-<h3 align="center"> KOOVS application was built during the construct week at [Masai School](https://masaischool.com/). Completed the project in five days with a team of Four aspiring developers.</h3>
-
 ### 🔗 Live Deployed URL: https://wonderful-bavarois-944f05.netlify.app/
 
 # Features
