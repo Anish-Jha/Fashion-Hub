@@ -1,6 +1,6 @@
-<h1 align="center">Koovs.com Clone : Fashionhub.com</h1>
+<h1 align="center">Fashionhub.com</h1>
 
-<h2 align="center"> KOOVS (Online clothes purchasing platform) is an React application designed to provide customers with a personalized easy-to-utilize user experience for purchasing clothes online. It stores customers' personal data and orders.</h2>
+<h2 align="center"> It is an React application designed to provide customers with a personalized easy-to-utilize user experience for purchasing clothes online. It stores customers' personal data and orders.</h2>
 
 <h3 align="center"> It has 5 modules Admin, User,Products, Add to Cart, Checkout.</h3>
 
