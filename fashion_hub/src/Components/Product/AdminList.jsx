@@ -5,7 +5,7 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 import { getProduct,removeProduct  } from '../../Redux/ProductRedux/action';
 import AdminCard from './AdminCard';
 
-const AdminList = ({onDelete}) => {
+const AdminList = () => {
   const [searchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(24);
@@ -85,7 +85,7 @@ const AdminList = ({onDelete}) => {
      }}
    >
      {currentProducts.length ? (
-       currentProducts.map((element) => <AdminCard key={element.id} product={element} onDelete={() => handleDelete(element.id)}/>)
+       currentProducts.map((element) => <AdminCard key={element.id} product={element}/>)
      ) : (
        <div style={{ display: 'flex' }}>
          <Heading>Loading...</Heading>

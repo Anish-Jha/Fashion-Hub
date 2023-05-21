@@ -20,7 +20,7 @@ export const reducer=(state=initialState,{type,payload})=>{
         case PATCH_PRODUCT_SUCCESS:
             return{...state, isLoading:false};
         case REMOVE_PRODUCT_SUCCESS:
-            const updatedProductList = state.product.filter(product => product.id !==payload);
+            const updatedProductList = state.product.filter(product => product._id!==payload);
             return {...state,product: updatedProductList,isLoading: false,isError: false};
         default:
             return state;

@@ -10,6 +10,7 @@ const Edit = () => {
   const [price, setPrice] = useState("");
   const [subhead,setSubhead]=useState("");
   const [image,setImage]=useState("");
+  const [description,setDescription]=useState("");
 
   const products = useSelector((store) => {
     return store.product.product;
@@ -17,14 +18,15 @@ const Edit = () => {
   const dispatch = useDispatch();
 
   useEffect(() =>{
-    const productData = products && products.find((el) => el.id===+id)
+    const productData = products && products.find((el) => el._id===id)
     if (productData) {
         setName(productData.name);
         setPrice(productData.price);
         setSubhead(productData.subhead)
         setImage(productData.image);
+        setDescription(productData.description)
     }
-  }, []);
+  }, [products]);
 
   const handleEdit = (e) => {
     e.preventDefault();
@@ -32,14 +34,16 @@ const Edit = () => {
       image,
       price,
       name,
-      subhead
+      subhead,
+      description
     };
     setName("");
     setPrice("");
     setSubhead("");
     setImage("");
-
-    dispatch(editProduct(id, newData)).then(() => dispatch(getProduct()));
+    setDescription("");
+    
+    dispatch(editProduct(id, newData)).then(()=>dispatch(getProduct()));
   };
 
   return (
@@ -48,10 +52,12 @@ const Edit = () => {
       <div style={{boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',padding:"20px",borderRadius:"5px",backgroundColor:"whitesmoke"}}>
         <FormLabel>Image</FormLabel>
         <Input type="url" value={image} onChange={(e) => setImage(e.target.value)}/>
-        <FormLabel>Subhead</FormLabel>
-        <Input type="text" value={subhead} onChange={(e) => setSubhead(e.target.value)}/>
         <FormLabel>name</FormLabel>
         <Input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
+        <FormLabel>Subhead</FormLabel>
+        <Input type="text" value={subhead} onChange={(e) => setSubhead(e.target.value)}/>
+        <FormLabel>description</FormLabel>
+        <Input type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
         <FormLabel>price</FormLabel>
         <Input type="text" value={price} onChange={(e) => setPrice(e.target.value)}/>
         <Button margin={'10px'} onClick={handleEdit}>Submit</Button>

@@ -27,7 +27,6 @@ const Admin=()=>{
      e.preventDefault();
      dispatch(addProduct(product));
      setproduct(initialState);
-     console.log(product)
   }
 
   return (

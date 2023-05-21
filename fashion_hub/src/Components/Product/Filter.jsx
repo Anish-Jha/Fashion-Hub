@@ -19,18 +19,15 @@ const Filter = () => {
     const handleChange=(e)=>{
         let newCategory=[...category];
         let value=e.target.value;
-
         if(newCategory.includes(value)){
             newCategory.splice(newCategory.indexOf(value),1)
         }else{
             newCategory.push(value);
         }
         setCategory(newCategory);
-       console.log(category);
     }
     
     const handleSort=(e)=>{
-      console.log(e.target.value);
       setOrder(e.target.value);
     }
 
@@ -201,9 +198,9 @@ const Filter = () => {
     </Drawer>
     <div style={{padding:"8px", outline:"none", marginLeft:"7px", cursor:"pointer",border:"none"}}>
       <Select onChange={handleSort} variant='unstyled' fontSize='14px' fontWeight={600} outline='none' border={"none"} cursor={'pointer'}>
-        <option style={{cursor:"pointer", fontWeight:'600'}}  name='order' value={''} order={order===''} outline='none'>Best Selling</option>
-        <option style={{cursor:"pointer", fontWeight:'600'}}  name='order' value={'asc'} order={order==='asc'} outline='none'>Price, Low to High</option>
-        <option style={{cursor:"pointer", fontWeight:'600'}}  name='order' value={'desc'} order={order==='desc'} outline='none'>Price, High to Low</option>
+        <option style={{cursor:"pointer", fontWeight:'600'}}  name='order' value={''} outline='none'>Best Selling</option>
+        <option style={{cursor:"pointer", fontWeight:'600'}}  name='order' value={'asc'} outline='none'>Price, Low to High</option>
+        <option style={{cursor:"pointer", fontWeight:'600'}}  name='order' value={'desc'} outline='none'>Price, High to Low</option>
         <option style={{cursor:"pointer", fontWeight:'600'}}  value="">Alphabetically, A-Z</option>
         <option style={{cursor:"pointer", fontWeight:'600'}}  value="">Alphabetically, Z-A</option>
         <option style={{cursor:"pointer", fontWeight:'600'}}  value="">Date,Old to New</option>

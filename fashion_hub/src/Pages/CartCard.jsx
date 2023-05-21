@@ -1,49 +1,68 @@
 import { Box, Button, Image, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {RiDeleteBin6Line} from 'react-icons/ri'
+import { getCart, removeCart, updateCart } from "../Redux/cartRedux/action";
+import { useDispatch, useSelector } from "react-redux";
 
-export const total=[];
-function CartCard({data,handleDicrement,handleIncrement,i,deleteCart}){
-    const cartData=JSON.parse(localStorage.getItem("cart"))||[]
-    const [count,setCount]=useState(1)
-    const handleCount=(val)=>{
-        setCount(count+val)
+function CartCard({data,calculateTotalPrice}){
+   
+    const id=data._id
+    const dispatch=useDispatch();
+    const handleDelete=()=>{
+        dispatch(removeCart(id));
+    };
+    
+    const [quantity, setQuantity] = useState(data.quantity);
+    
+    const handleIncrement = () => {
+        calculateTotalPrice();
+        setQuantity(quantity + 1);
+        dispatch(updateCart(id, quantity + 1));
+    };
+    
+    const handleDecrement = () => {
+        if (quantity>1) {
+            setQuantity(quantity - 1);
+            dispatch(updateCart(id, quantity - 1));
+            calculateTotalPrice();
+          }
     }
-// total.push(count*data.price);
-    // console.log(data.image)
+
+    useEffect(()=>{
+        dispatch(getCart())
+    },[dispatch])
+
     return(
-        <Box display={["","flex","flex","flex","flex","flex"]} p='10px' w='100%' mt='20px' bgColor={'#faf5f5'} justifyContent={'space-between'} borderRadius={'10px'} fontFamily="sans-serif" alignContent="center" alignItems="center"
-        boxShadow='rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset'>
-                <Box w={["100%","45%","45%","55%","55%","50%"]} bgColor={'#ececec'} borderRadius={'10px'} boxShadow='rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset'>
+        <Box display={["","flex","flex","flex","flex","flex"]} p='10px' w='100%' mt='20px' bgColor={'#faf5f5'} justifyContent={'space-between'} borderRadius={'10px'} fontFamily="sans-serif" alignContent="center" alignItems="center">
+                <Box w={["100%","70%","60%","55%","55%","50%"]} bgColor={'#ececec'} borderRadius={'10px'}>
                     <Box display="flex" gap="10px">
-                        <Box w={["90%","60%","50%","25%","25%","20%"]}>
-                        <Image borderRadius={'10px'} src={data.image}/>
+                        <Box w={["30%","30%","40%","90%","95%","90%"]}>
+                        <Image w='100px' borderRadius={'10px'} src={data.product.image}/>
                         </Box>
-                        <Box padding={'20px'}>
-                            <Text fontWeight={'600'} fontSize={'16px'} textAlign={'left'}>{data.name}</Text>
-                            <Text fontWeight={'600'} fontSize={'13px'} textAlign={'left'}>{data.subhead}</Text>
-                           <Box display={'flex'} justifyContent={'space-between'} w='330px'>
-                           <Text mt='10px' fontWeight={'600'} fontSize={'16px'} textAlign={'left'}>Price: ₹ {data.price}</Text>
-                            <Button variant={'unstyled'} pt={'5px'} fontSize={'18px'} onClick={()=>deleteCart(i)}><RiDeleteBin6Line/></Button>
+                        <Box  w={["70%","60%","60%","90%","95%","90%"]} padding={'20px'}>
+                            <Text fontWeight={'600'} fontSize={'16px'} textAlign={'left'}>{data.product.name}</Text>
+                            <Text fontWeight={'600'} fontSize={'13px'} textAlign={'left'}>{data.product.subhead}</Text>
+                           <Box display={'flex'} justifyContent={'space-between'}>
+                           <Text mt='10px' fontWeight={'600'} fontSize={'16px'} textAlign={'left'}>Price: ₹ {data.product.price}</Text>
+                            <Button variant={'unstyled'} pt={'5px'} fontSize={'18px'} onClick={handleDelete}><RiDeleteBin6Line/></Button>
                            </Box>
                             
                         </Box>
                     </Box>
                 </Box>
 
-                <Box w="100px">
+                <Box w="max-content" display={'flex'} gap={'60px'}>
+                    <Box>
                     <Text fontWeight="bold">Quantity</Text>
-                    <Box bgColor={'#ececec'} boxShadow='rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset' display="flex" borderRadius={'5px'}>
-                        <Button bg="none" onClick={()=>handleIncrement(data.id)}>+</Button>
-                        <Text  m="auto">{data.quantity}</Text>
-                        <Button bg="none" isDisabled={data.quantity==1? true:false} onClick={()=>handleDicrement(data.id)}>-</Button>
+                    <Box bgColor={'#ececec'} display="flex" borderRadius={'5px'}>
+                        <Button bg="none" onClick={handleIncrement}>+</Button>
+                        <Text  m="auto">{quantity}</Text>
+                        <Button bg="none" onClick={handleDecrement}>-</Button>
                     </Box>
-                </Box>
-
-                <Box mr='20px' fontWeight="bold">
-                    <Text ></Text>
-                    <Text>Total: ₹ {data.quantity*data.price}</Text>
-
+                    </Box>
+                     <Box mr='10px' fontWeight="bold" mt='20px'>
+                    <Text>Total: ₹ {quantity*data.product.price}</Text>
+                    </Box>
                 </Box>
         </Box>
         

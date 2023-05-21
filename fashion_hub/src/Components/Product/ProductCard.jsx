@@ -5,8 +5,12 @@ export default function ProductCard({product}) {
   return (
     <div style={{width:"315px",height:"529px",overflow:"hidden",textAlign:"left",
     padding:"10px",margin:"auto",}}>
-      <Link to={`/product/${product.id}`}>
-      <img style={{width:"295px", height:"395px",margin:"auto"}} src={product.image} alt={product.name}/>
+      <Link to={`/product/${product._id}`}>
+      <img style={{width:"295px", height:"395px",margin:"auto"}} src={product.image} alt={product.name}
+      onError={(e)=>{
+        e.target.src = "https://i.pinimg.com/originals/e3/df/0e/e3df0eb6713bf1af7e6c0fe914ed3816.jpg";
+        e.target.alt = "Alternative Image";
+      }}/>
       </Link>
       <small style={{fontSize:"11px", color:"grey"}}>{product.subhead}</small>
       <p style={{fontFamily:"Helvetica", fontWeight:"600", fontSize:"12px", color:"#000000",lineHeight:"21px",paddingBottom:"5px",

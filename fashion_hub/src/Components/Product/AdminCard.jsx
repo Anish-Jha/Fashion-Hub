@@ -7,12 +7,11 @@ import {TbEdit} from 'react-icons/tb'
 import {RiDeleteBin6Line} from 'react-icons/ri'
 
 export default function AdminCard({product,onDelete}) {
-  const dispatch = useDispatch();
-
-  const handleDelete=(id) => {
-    dispatch(removeProduct(id));
-    onDelete();
-  };
+  const id=product._id
+    const dispatch=useDispatch();
+    const handleDelete=()=>{
+        dispatch(removeProduct(id));
+    };
 
   return (
     <div style={{width:"200px",height:"380px",overflow:"hidden",textAlign:"left", backgroundColor:"#fdf7ee",borderRadius:"10px",
@@ -22,13 +21,13 @@ export default function AdminCard({product,onDelete}) {
       <p style={{fontFamily:"Helvetica", fontWeight:"600", fontSize:"12px", color:"#000000",lineHeight:"21px",paddingBottom:"5px",
        whiteSpace:'nowrap',overflow:'hidden', textOverflow:'ellipsis'}}>{product.name}</p>
       <p style={{fontWeight:"400", fontSize:"14px", color:"#000000",lineHeight:"21px",paddingBottom:"5px"}}>Rs. {product.price}</p>
-      <Link to={`/product/${product.id}/edit`}>
+      <Link to={`/product/${product._id}/edit`}>
         <Button bgColor={'lightgreen'}><TbEdit/></Button>
       </Link>
       <Button
         colorScheme='red'
         ml='10px'
-        onClick={() =>handleDelete(product.id)}
+        onClick={handleDelete}
        >
        <RiDeleteBin6Line/>
       </Button>

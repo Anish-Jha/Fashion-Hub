@@ -19,41 +19,54 @@ export const postProductSuccess=()=>{
 }
 
 export const removeProductSuccess = (id) => {
-    return { type: REMOVE_PRODUCT_SUCCESS, payload: id };
-  };
+    return { type: REMOVE_PRODUCT_SUCCESS, payload:id };
+};
 
 export const getProduct=(params)=>(dispatch)=>{
     dispatch(productRequest());
-   axios.get("https://fashion-hub-r5a1.onrender.com/product",params).then((res)=>{
+   axios.get("https://zealous-girdle-cow.cyclic.app/product",params).then((res)=>{
       dispatch(getProductSuccess(res.data));
     }).catch(()=>{
         dispatch(productFailure());
     })
 }
 
-export const addProduct=(payload)=>(dispatch)=>{
+export const addProduct=(payload)=>(dispatch,getState)=>{
+  const token = getState().authreducer.token;
+  const config = {
+    headers: {Authorization: `Bearer ${token}` }
+  };
     dispatch(productRequest());
-    axios.post("https://fashion-hub-r5a1.onrender.com/product", payload).then(()=>{
+    axios.post("https://zealous-girdle-cow.cyclic.app/addproduct", payload,config).then(()=>{
         dispatch(postProductSuccess());
     }).catch(()=>{
         dispatch(productFailure());
     })
 }
 
-export const editProduct=(id,newData)=>(dispatch)=>{
+export const editProduct=(id,newData)=>(dispatch,getState)=>{
+  const token = getState().authreducer.token;
+  const config = {
+    headers: {Authorization: `Bearer ${token}` }
+  };
     dispatch(productRequest());
-    axios.patch(`https://fashion-hub-r5a1.onrender.com/product/${id}`,newData).then(()=>{
+    axios.patch(`https://zealous-girdle-cow.cyclic.app/product/edit/${id}`,newData,config).then(()=>{
         dispatch({type:PATCH_PRODUCT_SUCCESS})
     }).catch(()=>{
         dispatch(productFailure());
     })
 }
 
-export const removeProduct = (id) => (dispatch) => {
+export const removeProduct = (id) => (dispatch,getState) => {
+    const token = getState().authreducer.token;
+    const config = {
+      headers: {Authorization: `Bearer ${token}` }
+    };
     dispatch(productRequest());
-    axios.delete(`https://fashion-hub-r5a1.onrender.com/product/${id}`).then(() => {
+    axios.delete(`https://zealous-girdle-cow.cyclic.app/product/delete/${id}`,config).then(() => {
       dispatch(removeProductSuccess(id));
     }).catch(() => {
       dispatch(productFailure());
     });
-  };
+};
+

@@ -46,7 +46,7 @@ export default function PaymentPage() {
   return (
     <Box justifyContent={'center'} w='90%' m='auto' p='10px' mb='80px' borderRadius={'10px'} 
     boxShadow='rgba(0, 0, 0, 0.24) 0px 3px 8px'>
-      <Box textAlign={'left'} bgColor={'whitesmoke'} p='10px'>
+      <Box textAlign={'left'} p='10px'>
         <Heading fontSize={'24px'}>Please provide your address</Heading>
         <Box>
           <Box display={'flex'} gap={'10px'}>
@@ -67,14 +67,9 @@ export default function PaymentPage() {
 
       <Box textAlign={'left'} mt='20px'>
       <Box>
-        <Box bgColor={'whitesmoke'} p='10px'>
-          <Heading fontSize={'20px'}>Payment Methods</Heading>
-        </Box>
-        <Box bgColor={'whitesmoke'} p='10px' mt='15px'>
-          <Button variant={'unstyled'}>Cash on delivery</Button>
-        </Box>
-        <Box bgColor={'whitesmoke'} p='10px' mt='15px'>
-          <Button variant={'unstyled'}>Credit Card</Button>
+
+        <Box p='10px' mt='15px'>
+          <Button variant={'unstyled'}>Payment Details</Button>
           <Box display={'flex'} justifyContent={'space-between'} w='70%'>
             <Box>
               <Text fontWeight={"600"}>Summary</Text>

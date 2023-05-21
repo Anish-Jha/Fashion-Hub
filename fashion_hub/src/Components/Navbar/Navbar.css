@@ -89,18 +89,21 @@
     justify-content: space-between;
 }
 
-
+#hamNav{
+  display: none;
+}
 @media(max-width: 1111px){
       .UpperNavbar{
         display: none;
       } 
-      
-      
 }
 
 @media(max-width: 768px){
     .mainNavbar{
         display: none;
+    }
+    #hamNav{
+      display: flex;
     }
     
 }

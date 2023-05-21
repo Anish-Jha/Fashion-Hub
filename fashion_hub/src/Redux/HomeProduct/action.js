@@ -16,7 +16,7 @@ export const HomeFailure=()=>{
 
 export const getHome=()=>(dispatch)=>{
     dispatch(HomeRequest());
-    axios.get("https://fashion-hub-r5a1.onrender.com/home").then((res)=>{
+    axios.get("https://zealous-girdle-cow.cyclic.app/home").then((res)=>{
         dispatch(getHomeSuccess(res.data));
         
     }).catch(()=>{

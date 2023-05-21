@@ -41,11 +41,6 @@ function reducer(state, action) {
         password: action.payload,
       };
 
-    case "phone":
-      return {
-        ...state,
-        phone: action.payload,
-      };
     default:
       return state;
   }
@@ -55,7 +50,6 @@ const initialState = {
   name: "",
   email: "",
   password: "",
-  phone:""
 };
 
 const SignUp = () => {
@@ -67,7 +61,7 @@ const SignUp = () => {
   const toast = useToast()
   const signupHandler = () => {
     dispatch(register(state)).then((r) => {
-      if(state.name==="" || state.email==="" || state.password==="" || state.phone===""){
+      if(state.name==="" || state.email==="" || state.password===""){
         toast({
           title: 'invalid credentials',
           description: "Please fill all neccessary fields!",
@@ -108,9 +102,6 @@ const SignUp = () => {
           <Heading fontSize={"4xl"} textAlign={"center"}>
             Sign up
           </Heading>
-          <Text fontSize={"lg"} color={"gray.600"}>
-            🙏Fashion Hub Team welcomes you🙏
-          </Text>
         </Stack>
         <Box
           rounded={"lg"}
@@ -160,17 +151,14 @@ const SignUp = () => {
                 size="lg"
               />
             </FormControl>
-            <FormControl id="Contact" isRequired>
+            <FormControl id="Contact">
               <FormLabel>Mobile No</FormLabel>
               <Input
               focusBorderColor="#353535"
               border={'1px solid black'}
               errorBorderColor="red.300"
-              type="text"
+              type='number'
               size="lg"
-              value={state.phone}
-              onChange={(e) =>
-              setter({ type: "phone", payload: e.target.value })}
               />
             </FormControl>
             <FormControl id="password" isRequired>

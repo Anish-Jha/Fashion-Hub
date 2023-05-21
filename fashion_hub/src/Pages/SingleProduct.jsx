@@ -1,57 +1,131 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import {IoIosArrowForward} from 'react-icons/io'
 import{FaEye} from 'react-icons/fa'
 import size from '../Components/Product/image/size.png'
 import {RiSubtractFill} from 'react-icons/ri'
 import {IoMdAdd} from 'react-icons/io'
+import pay from "./successgif.gif";
 import {BsShare} from 'react-icons/bs'
 import {BsQuestionCircle,BsStar} from 'react-icons/bs'
-import ProductCard from "../Components/Product/ProductCard";
-import { Box, Button, Image, Text } from "@chakra-ui/react";
+import { addToCart, emptyCart } from "../Redux/cartRedux/action";
+import { Box, Button,Input, Image, Text, useDisclosure, useToast } from "@chakra-ui/react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 
-const initialValue=1;
 
 export default function SingleProduct() {
-  const [count, setCount] = useState(initialValue);
+  const [count, setCount] = useState(1);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+  const toast = useToast();
+  const [cvv, setCvv] = useState("");
+  const [card, setCard] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [paymentComplete, setPaymentComplete] = useState(true);
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const dispatch = useDispatch();
+  const [inputType, setInputType] = useState('text');
+
+  const handleFocus = () => {
+    setInputType('month');
+  };
 
   const { id } = useParams();
-  console.log(id,"id");
   const products = useSelector((store) => {
     return store.product.product;
   });
 
-  console.log(products,"hjkl")
   const [data, setData] = useState("");
-
+  const [addedToCart, setAddedToCart] = useState(false);
+  
+  const productData = products && products.find((el) => el._id===id)
   useEffect(() => {
-    const productData = products && products.find((el) => el.id===+id)
-    console.log(productData,"se")
     if(productData){
       setData(productData);
     }
   }, []);
 
+  const handleButtonClick = () => {
+    navigate("/product");
+  };
+  const handleSubmit = () => {
+    if (
+      cvv === "" ||
+      card === "" ||
+      name === "" ||
+      address === "" ||
+      city === ""
+    ) {
+      toast({
+        title: "fields empty",
+        description: "All input fields are neccessary to be filled",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    } else if (card.length !== 16) {
+      toast({
+        title: "card length should be 16 characters",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    } else if (cvv.length !== 3) {
+      toast({
+        title: "cvv length should be 3 characters",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    } else {
+      toast({
+        title: "Payment Successfull",
+        description: "Your items will be delivered shortly",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+      setPaymentComplete(false);
+    }
+  };
+
   const handleIncrement = () => {
-    setCount(count + 1);
+    setCount((prevQuantity) => prevQuantity + 1);
+    console.log(count)
   }
 
   const handleDecrement = () => {
-    setCount(count - 1);
+    setCount((prevQuantity) => prevQuantity - 1);
   }
 
-   const n=Math.ceil(Math.random()*6);
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    const payload = {
+      product_id: id,
+      product: productData,
+      quantity: count,
+    };
+    console.log(payload);
+    dispatch(addToCart(payload));
+    setAddedToCart(true);
+  };
 
-  const cartData=JSON.parse(localStorage.getItem("cart"))||[]
-   const handleCart=()=>{
-    data.quantity=1;
-    console.log(data)
-    
-    cartData.push(data)
-    localStorage.setItem("cart",JSON.stringify(cartData))
-    console.log(data)
-   }
+  const n=Math.ceil(Math.random()*6);
+  
   return (
     <>
     <Box display={'flex'} w='100%' m='auto' justifyContent={'center'}>
@@ -64,7 +138,7 @@ export default function SingleProduct() {
 
     <Box display={['block','block','flex','flex']} w={['100%','100%','80%',"80%"]} m='auto' gap='20px' mt='20px'>
      <Box>
-     <Image m='auto' w={['300px','300px','350px','400px','500px']} src={data.image} alt="" />
+     <Image m='auto' w={['300px','300px','350px','400px','500px']} src={data.image} alt="loading..." />
      </Box>
 
      <Box textAlign={'left'} p='10px' >
@@ -94,14 +168,11 @@ export default function SingleProduct() {
                <Button padding={"10px"} variant={'unstyled'} onClick={handleIncrement}><IoMdAdd/></Button>
             </Box>
 
-            <Link to="/cart"> <Button width={['350px','350px','440px','440px']} variant={'unstyled'} border={'1px solid black'} height={'44px'} 
-             _hover={{backgroundColor:"black",color: "white"}} onClick={handleCart}>Add to cart</Button>
-             </Link>
+            <Button width={['350px','350px','440px','440px']} variant={'unstyled'} border={'1px solid black'} height={'44px'} onClick={handleAddToCart}
+             _hover={{backgroundColor:"black",color: "white"}}>{addedToCart ? 'Added to Cart' : 'Add to Cart'}</Button>
           </Box>
-       <Link to='/buynow'>
-       <Button width={['350px','400px','562px','562px']} variant={'unstyled'} border={'1px solid black'} height={'44px'} backgroundColor={'black'} color={'white'}
+       <Button onClick={isLoggedIn ? onOpen : undefined} width={['350px','400px','562px','562px']} variant={'unstyled'} border={'1px solid black'} height={'44px'} backgroundColor={'black'} color={'white'}
         _hover={{backgroundColor:"white",color: "black"}} margin='20px 0px 10px 0px'>BUY IT NOW</Button>
-       </Link>
         </Box>
         <Box style={{display:"flex",marginTop:"50px", fontSize:"14px"}}>
         <BsQuestionCircle fontSize={'20px'}/>
@@ -129,6 +200,157 @@ export default function SingleProduct() {
         <li>Model wears size L and is 6'2</li>
       </Box>
     </Box>
+    <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent w={["90%", "", "", "", ""]}>
+          <ModalHeader textAlign={"center"}>Payment</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {paymentComplete ? (
+              <Box
+                maxW="600px"
+                m="auto"
+                p="20px"
+                borderRadius="10px"
+                bg="white"
+              >
+                <Text fontSize="24px" fontWeight="bold" mb="20px">
+                  Delivery address
+                </Text>
+                <Box>
+                  <Input
+                    focusBorderColor="none"
+                    _focus={{ bgColor: "whitesmoke" }}
+                    outline={"none"}
+                    border="none"
+                    variant="filled"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    mb="10px"
+                    placeholder="Address/locality"
+                  />
+                  <Input
+                    focusBorderColor="none"
+                    _focus={{ bgColor: "whitesmoke" }}
+                    outline={"none"}
+                    border="none"
+                    variant="filled"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    mb="10px"
+                    placeholder="City"
+                  />
+                  <Input
+                    focusBorderColor="none"
+                    _focus={{ bgColor: "whitesmoke" }}
+                    outline={"none"}
+                    border="none"
+                    variant="filled"
+                    mb="10px"
+                    placeholder="Landmark"
+                  />
+                  <Input
+                    focusBorderColor="none"
+                    _focus={{ bgColor: "whitesmoke" }}
+                    outline={"none"}
+                    border="none"
+                    variant="filled"
+                    mb="10px"
+                    placeholder="Alternate mobile no."
+                  />
+                </Box>
+
+                <Box mt="30px">
+                  <Text fontSize="18px" fontWeight="bold" mb="10px">
+                    Payment Details
+                  </Text>
+                  <Box mb="10px">
+                    <Text fontWeight="bold">Summary</Text>
+                    <Text>Total amount: Rs. {data.price} </Text>
+                    <Text>Delivery: Free</Text>
+                  </Box>
+                  <Box>
+                    <Input
+                      focusBorderColor="none"
+                      _focus={{ bgColor: "whitesmoke" }}
+                      outline={"none"}
+                      border="none"
+                      variant="filled"
+                      value={card}
+                      onChange={(e) => setCard(e.target.value)}
+                      mb="10px"
+                      placeholder="Card Number"
+                    />
+                    <Box display="flex" mb="10px">
+                      <Input
+                        focusBorderColor="none"
+                        _focus={{ bgColor: "whitesmoke" }}
+                        outline="none"
+                        border="none"
+                        onFocus={handleFocus}
+                        type={inputType}
+                        variant="filled"
+                        mr="2"
+                        mb="0"
+                        placeholder="MM/YY"
+                      />
+
+                      <Input
+                        focusBorderColor="none"
+                        _focus={{ bgColor: "whitesmoke" }}
+                        outline={"none"}
+                        border="none"
+                        variant="filled"
+                        id="cvv"
+                        value={cvv}
+                        onChange={(e) => setCvv(e.target.value)}
+                        mb="0"
+                        placeholder="CVV"
+                      />
+                    </Box>
+                    <Input
+                      focusBorderColor="none"
+                      _focus={{ bgColor: "whitesmoke" }}
+                      outline={"none"}
+                      border="none"
+                      variant="filled"
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      mb="10px"
+                      placeholder="Name on the Card"
+                    />
+                  </Box>
+                </Box>
+
+                <Button
+                  onClick={handleSubmit}
+                  w="100%"
+                  mt="30px"
+                  bg="blue.500"
+                  color="white"
+                  _hover={{ bg: "blue.600" }}
+                >
+                  Proceed to Pay
+                </Button>
+              </Box>
+            ) : (
+              <Box textAlign={"center"}>
+                <Image m="auto" src={pay} />
+                <Button
+                  colorScheme="blue"
+                  m={"auto"}
+                  mt="20px"
+                  onClick={handleButtonClick}
+                >
+                  Continue Shopping
+                </Button>
+              </Box>
+            )}
+          </ModalBody>
+          <ModalFooter></ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }
