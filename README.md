@@ -4,7 +4,7 @@
 
 <h3 align="center"> It has 5 modules Admin, User,Products, Add to Cart, Checkout.</h3>
 
-### 🔗 Live Deployed URL: https://wonderful-bavarois-944f05.netlify.app/
+### 🔗 Live Deployed URL: https://fashion-hub-site.vercel.app/
 
 # Features
 
@@ -15,8 +15,8 @@
 - User can order products of its choice
 
 #Admin credentials
--email: admin@gmail.com
--password:admin
+-email: admin@batman.com
+-password:Bruce Wayne
 
 # Technology used 
 - React
@@ -79,7 +79,6 @@
 
 - Gain excessive knowledge on application of React and DOM manipulation
 - Gain knowledge on using API.
-- Got to know how to collabrate with team members.
 - Enjoyed the process of learning and creating the application.
 
 
